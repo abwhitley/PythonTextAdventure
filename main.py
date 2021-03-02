@@ -3,12 +3,15 @@
 
 # Main executable that controls flow
 def main():
-    character = chooseYourCharacter()
-    print(character.description)
+    goblin1 = Goblin
+    troll1 = Troll
+    necromance1 = Necromancer
+    character1 = chooseYourCharacter()
+    print(character1.description)
     insertPrintBreaks()
-    doorChosen = originRoom()
+    doorChosen = chooseADoor()
     firstRoomChosen(doorChosen)
-    print(character.description)
+    print(character1.description)
 
 # Function to insert line breaks for easier reading in console
 def insertPrintBreaks():
@@ -18,79 +21,84 @@ def insertPrintBreaks():
 def chooseYourCharacter():
     insertPrintBreaks()
     print("What class would you like?")
-    choise = input("Ranger, Warrior or Wizard?")
+    choice = input("Ranger, Warrior or Wizard?")
     insertPrintBreaks()
-    print("You chose ", choise)
+    print("You chose ", choice)
     insertPrintBreaks()
     # Connects users choise to the correct class
-    if choise == "Ranger":
+    if choice == "Ranger":
         character = Ranger
-    elif choise == "Warrior":
+    elif choice == "Warrior":
         character = Warrior
-    elif choise == "Wizard":
+    elif choice == "Wizard":
         character = Wizard
     return character
 
-# Origin Room that leads to the door choise 
-def originRoom():
+def wouldYouLikeToLookAround():
     # originRooms is the class that contains all info for the doors and their descriptions
     entrance = originRooms
     print("You drop into a peculiar room, almost no light but a lone candle`")
     print("Would you like to look around?")
     insertPrintBreaks()
-    choise = input("Yes or No")
-    if choise == "Yes":
+    choice = input("Yes or No")
+    if choice == "Yes":
         print(entrance.description)
         insertPrintBreaks()
-    elif choise == "No":
+    elif choice == "No":
         print("Well what else are you going to do?")
         print("Lets look around the room")
         print(entrance.description)
         insertPrintBreaks()
 
+# Origin Room that leads to the door choise 
+def chooseADoor():
+    wouldYouLikeToLookAround()
     print("Which Door do you want to look at?")
-    doorChoise = int(input("1,2 or 3?"))
+    doorChoice = int(input("1,2 or 3?"))
     insertPrintBreaks()
-    if doorChoise == 1:
+    if doorChoice == 1:
         doorObject = door1
         print(doorObject.description)
         print("Would you like to go through the door?")
         insertPrintBreaks()
-        doorChoise1 = input("Yes or No")
+        doorChoice1 = input("Yes or No")
         insertPrintBreaks()
-        if doorChoise1 == "Yes":
+        if doorChoice1 == "Yes":
             return doorObject
-        elif doorChoise1 == "No":
+        elif doorChoice1 == "No":
             print("Okay which door?")
             insertPrintBreaks()
             return originRoom()
-    elif doorChoise == 2:
+    elif doorChoice == 2:
         doorObject = door2
         print(doorObject.description)
         print("Would you like to go through the door?")
         insertPrintBreaks()
-        doorChoise1 = input("Yes or No")
-        if doorChoise1 == "Yes":
+        doorChoice1 = input("Yes or No")
+        if doorChoice1 == "Yes":
             return doorObject
-        elif doorChoise1 == "No":
+        elif doorChoice1 == "No":
             print("Okay which door?")
             insertPrintBreaks()
             return originRoom()
         print(doorObject.description)
-    elif doorChoise == 3:
+    elif doorChoice == 3:
         doorObject = door3
         print(doorObject.description)
         print("Would you like to go through the door?")
-        doorChoise1 = input("Yes or No")
+        doorChoice1 = input("Yes or No")
         insertPrintBreaks()
-        if doorChoise1 == "Yes":
+        if doorChoice1 == "Yes":
             return doorObject
-        elif doorChoise1 == "No":
+        elif doorChoice1 == "No":
             print("Okay which door?")
             insertPrintBreaks()
             return originRoom()
+    elif: doorChoice == 4:
+        doorObject = TestArena
+        return doorObject
 
-# Allow the door chosen to open the correct room
+# Allow the door chosen to open the correct room and Secret Room
 def firstRoomChosen(doorChosen):
     if doorChosen == door1:
         print(door1.room1.description)
@@ -102,6 +110,10 @@ def firstRoomChosen(doorChosen):
     elif doorChosen == door3:
         print(door3.room3.description)
         insertPrintBreaks()
+    elif doorChosen == TestArena:
+        TestArena.printDescription()
+        insertPrintBreaks()
+        secretArenaRoom()
 
 # 1st door Room
 def redOrbRoom():
@@ -110,28 +122,46 @@ def redOrbRoom():
     print("2:", redOrb.options[1])
     choise = int(input("1 or 2?"))
     insertPrintBreaks()
-    if choise == 1:
-        choise1 = orbTaken
-        print(choise1.description)
-    elif choise == 2:
-        choise2 = searchForWayOut
-        print(choise2.description)
+    if choice == 1:
+        choice1 = orbTaken
+        print(choice1.description)
+    elif choice == 2:
+        choice2 = searchForWayOut
+        print(choice2.description)
+
+# using to test comabt
+def secretArenaRoom(character,goblin1):
+    testArena1 = TestArena
+    testArena1.printDescription()
+    print(character.description)
+    print(goblin1.description)
 
 
 class Ranger:
     description = "I use bows"
     weapon = "Bow"
     health = 15
+    damage = 10
     
 
 # Used while the import statement is done correctly, remove once it is
 class Warrior:
     description = "I use swords and sheilds"
     weapon = "Sword"
+    health = 25
+    damage = 5
 
 class Wizard:
     description = "I use magic"
     weapon = "Staff"
+    health = 10
+    damage = 15
+
+class TestArena:
+    description = "Whats going on here?"
+    def printDescription():
+        print(TestArena.description)
+    
 
 class originRooms:
     description = "I lone dark room with 3 door ways, each one marked in blood"
@@ -160,5 +190,21 @@ class door3:
         description = "You walk into a black errie room. When you try to close the half destroyed door the doorway caves in and your left in the dark."
         options = ["Allow to your eyes to adjust","Feel around for something"]
 
+class Goblin:
+    name = "Goblin"
+    description = "An ugly little creature that is not looking at you to kind"
+    weapon = "Axe"
+    health = 10
+    damage = 1
 
+class Troll:
+    name = "Troll"
+    description = "Holy cow thats big"
+    weapon = "Club"
+    health = 30
+    damage = 2
+
+class Necromancer:
+    name = "Necromancer"
+    description = "Has an erie since"
 main()
