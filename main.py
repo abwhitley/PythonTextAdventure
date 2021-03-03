@@ -1,17 +1,13 @@
 # This line needs to be worked on to import the classes
 # from Python Practice.Text-Based Adventure import class.py
-
+import random
 # Main executable that controls flow
 def main():
-    goblin1 = Goblin
-    troll1 = Troll
-    necromance1 = Necromancer
-    character1 = chooseYourCharacter()
-    print(character1.description)
+    userCharacter = chooseYourCharacter()
+    print(userCharacter.description)
     insertPrintBreaks()
     doorChosen = chooseADoor()
-    firstRoomChosen(doorChosen)
-    print(character1.description)
+    firstRoomChosen(doorChosen,userCharacter)
 
 # Function to insert line breaks for easier reading in console
 def insertPrintBreaks():
@@ -27,12 +23,12 @@ def chooseYourCharacter():
     insertPrintBreaks()
     # Connects users choise to the correct class
     if choice == "Ranger":
-        character = Ranger
+        userCharacter = Ranger
     elif choice == "Warrior":
-        character = Warrior
+        userCharacter = Warrior
     elif choice == "Wizard":
-        character = Wizard
-    return character
+        userCharacter = Wizard
+    return userCharacter
 
 def wouldYouLikeToLookAround():
     # originRooms is the class that contains all info for the doors and their descriptions
@@ -54,7 +50,7 @@ def wouldYouLikeToLookAround():
 def chooseADoor():
     wouldYouLikeToLookAround()
     print("Which Door do you want to look at?")
-    doorChoice = int(input("1,2 or 3?"))
+    doorChoice = int(input("1,2 or 3 or 4 for Test Arena?"))
     insertPrintBreaks()
     if doorChoice == 1:
         doorObject = door1
@@ -68,7 +64,7 @@ def chooseADoor():
         elif doorChoice1 == "No":
             print("Okay which door?")
             insertPrintBreaks()
-            return originRoom()
+            return chooseADoor()
     elif doorChoice == 2:
         doorObject = door2
         print(doorObject.description)
@@ -80,7 +76,7 @@ def chooseADoor():
         elif doorChoice1 == "No":
             print("Okay which door?")
             insertPrintBreaks()
-            return originRoom()
+            return chooseADoor()
         print(doorObject.description)
     elif doorChoice == 3:
         doorObject = door3
@@ -93,13 +89,13 @@ def chooseADoor():
         elif doorChoice1 == "No":
             print("Okay which door?")
             insertPrintBreaks()
-            return originRoom()
-    elif: doorChoice == 4:
+            return chooseADoor()
+    elif doorChoice == 4:
         doorObject = TestArena
         return doorObject
 
 # Allow the door chosen to open the correct room and Secret Room
-def firstRoomChosen(doorChosen):
+def firstRoomChosen(doorChosen,userCharacter):
     if doorChosen == door1:
         print(door1.room1.description)
         insertPrintBreaks()
@@ -111,16 +107,15 @@ def firstRoomChosen(doorChosen):
         print(door3.room3.description)
         insertPrintBreaks()
     elif doorChosen == TestArena:
-        TestArena.printDescription()
         insertPrintBreaks()
-        secretArenaRoom()
+        secretArenaRoom(userCharacter)
 
 # 1st door Room
 def redOrbRoom():
     redOrb = door1.room1
     print("1:", redOrb.options[0])
     print("2:", redOrb.options[1])
-    choise = int(input("1 or 2?"))
+    choice = int(input("1 or 2?"))
     insertPrintBreaks()
     if choice == 1:
         choice1 = orbTaken
@@ -129,29 +124,48 @@ def redOrbRoom():
         choice2 = searchForWayOut
         print(choice2.description)
 
-# using to test comabt
-def secretArenaRoom(character,goblin1):
+# using to test combat
+# The random number generator is working i just need to parse the day
+def secretArenaRoom(userCharacter):
     testArena1 = TestArena
-    testArena1.printDescription()
-    print(character.description)
-    print(goblin1.description)
+    print(testArena1.description)
+    print(userCharacter.description)
+    print("Weapon: ", userCharacter.weapon)
+    print("Health: ", userCharacter.health)
+    enemyChosen = randomEnemy()
+    print("The enemy is: ", enemyChosen)
 
+# Random Enemy Generator if more enemies added the random number generator needs to be adjusted
+# Or find a way to show how long the list is
+def randomEnemy():
+    enemyObject = Enemy
+    enemylist = enemyObject.enemies
+    number = random.uniform(0,3)
+    roundNumber = int(round(number))
+    print(roundNumber)
+    enemyChosen = enemylist[roundNumber]
+    insertPrintBreaks()
+    insertPrintBreaks()
+    print(enemyChosen)
+    return enemyChosen
 
+# I need to find a way to move the classes to another folder
 class Ranger:
+    name = "Ranger"
     description = "I use bows"
     weapon = "Bow"
     health = 15
     damage = 10
     
-
-# Used while the import statement is done correctly, remove once it is
 class Warrior:
+    name = "Warrior"
     description = "I use swords and sheilds"
     weapon = "Sword"
     health = 25
     damage = 5
 
 class Wizard:
+    name = "Wizard"
     description = "I use magic"
     weapon = "Staff"
     health = 10
@@ -159,10 +173,7 @@ class Wizard:
 
 class TestArena:
     description = "Whats going on here?"
-    def printDescription():
-        print(TestArena.description)
     
-
 class originRooms:
     description = "I lone dark room with 3 door ways, each one marked in blood"
 
@@ -207,4 +218,11 @@ class Troll:
 class Necromancer:
     name = "Necromancer"
     description = "Has an erie since"
+
+# Used to put the enemies in an array for random number generator
+class Enemy:
+    theGoblin = Goblin
+    theTroll = Troll
+    theNecromancer = Necromancer
+    enemies = [theGoblin,theTroll,theNecromancer]
 main()
