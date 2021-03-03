@@ -129,24 +129,32 @@ def redOrbRoom():
 def secretArenaRoom(userCharacter):
     testArena1 = TestArena
     print(testArena1.description)
-    print(userCharacter.description)
-    print("Weapon: ", userCharacter.weapon)
-    print("Health: ", userCharacter.health)
     enemyChosen = randomEnemy()
-    print("The enemy is: ", enemyChosen)
+    displayUserInfo(userCharacter)
+    displayEnemyInfo(enemyChosen)
+
+def displayUserInfo(userCharacter):
+    insertPrintBreaks()
+    print(userCharacter.name)
+    print(userCharacter.weapon)
+    print(userCharacter.health)
+    insertPrintBreaks()
+def displayEnemyInfo(enemyChosen):
+    insertPrintBreaks()
+    print(enemyChosen.name)
+    print(enemyChosen.description)
+    print(enemyChosen.weapon)
+    print(enemyChosen.health)
+    insertPrintBreaks()
 
 # Random Enemy Generator if more enemies added the random number generator needs to be adjusted
 # Or find a way to show how long the list is
 def randomEnemy():
     enemyObject = Enemy
     enemylist = enemyObject.enemies
-    number = random.uniform(0,3)
+    number = random.uniform(0,2)
     roundNumber = int(round(number))
-    print(roundNumber)
     enemyChosen = enemylist[roundNumber]
-    insertPrintBreaks()
-    insertPrintBreaks()
-    print(enemyChosen)
     return enemyChosen
 
 # I need to find a way to move the classes to another folder
