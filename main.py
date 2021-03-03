@@ -130,8 +130,29 @@ def secretArenaRoom(userCharacter):
     testArena1 = TestArena
     print(testArena1.description)
     enemyChosen = randomEnemy()
+    battle(userCharacter, enemyChosen)
+
+def battle(userCharacter,enemyChosen):
     displayUserInfo(userCharacter)
     displayEnemyInfo(enemyChosen)
+    userHealth = userCharacter.health
+    userDamage = userCharacter.damage
+    enemyHealth = enemyChosen.health
+    enemyDamage = enemyChosen.damage
+    while (userHealth > 0 or enemyHealth > 0):
+        if enemyHealth > 0:
+            enemyHealth = userAttack(userDamage, enemyHealth)
+            print("Enemy Health: ", enemyHealth)
+        if userHealth > 0:
+            userHealth = enemyAttack(userHealth, enemyDamage)
+            print("User Health: ", userHealth)
+
+def userAttack(userDamage, enemyHealth):
+    damageDone = int(enemyHealth - userDamage)
+    return damageDone
+def enemyAttack(userHealth, enemyDamage):
+    damageDone = userHealth - enemyDamage
+    return damageDone
 
 def displayUserInfo(userCharacter):
     insertPrintBreaks()
@@ -139,6 +160,7 @@ def displayUserInfo(userCharacter):
     print(userCharacter.weapon)
     print(userCharacter.health)
     insertPrintBreaks()
+
 def displayEnemyInfo(enemyChosen):
     insertPrintBreaks()
     print(enemyChosen.name)
@@ -225,7 +247,10 @@ class Troll:
 
 class Necromancer:
     name = "Necromancer"
-    description = "Has an erie since"
+    description = "Has an erie auroa"
+    weapon = "Possessed Staff"
+    health = 10
+    damage = 3
 
 # Used to put the enemies in an array for random number generator
 class Enemy:
