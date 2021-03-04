@@ -142,11 +142,11 @@ def battle(userCharacter,enemyChosen):
     enemyDamage = enemyChosen.damage
     while(userHealth >= 0) or (enemyHealth >= 0):
         enemyHealth = userAttack(userDamage,enemyHealth)
-        print("Enemy Health: ",enemyHealth)
+        displayEnemyInfoInBattle(enemyChosen,enemyHealth)
         if enemyHealth <= 0:
             break
         userHealth = enemyAttack(userHealth, enemyDamage)
-        print("Youre Health: ", userHealth)
+        displayUserInfoInBattle(userCharacter, userHealth)
         if userHealth <= 0:
             break
     if userHealth <= 0:
@@ -175,6 +175,14 @@ def displayUserInfo(userCharacter):
     print("Health: ", userCharacter.health)
     insertPrintBreaks()
 
+def displayUserInfoInBattle(userCharacter, userHealth):
+    insertPrintBreaks()
+    print(userCharacter.name)
+    print("Weapon: ", userCharacter.weapon)
+    print("Damage: ", userCharacter.damage)
+    print("Health: ", userHealth)
+    insertPrintBreaks()
+
 # Display Enemy Info
 def displayEnemyInfo(enemyChosen):
     insertPrintBreaks()
@@ -184,6 +192,17 @@ def displayEnemyInfo(enemyChosen):
     print("Damage: ", enemyChosen.damage)
     print("Health: ", enemyChosen.health)
     insertPrintBreaks()
+
+def displayEnemyInfoInBattle(enemyChosen, enemyHealth):
+    insertPrintBreaks()
+    print(enemyChosen.name)
+    print(enemyChosen.description)
+    print("Weapon: ", enemyChosen.weapon)
+    print("Damage: ", enemyChosen.damage)
+    print("Health: ", enemyHealth)
+    insertPrintBreaks()
+
+
 
 # Random Enemy Generator if more enemies added the random number generator needs to be adjusted
 # Or find a way to show how long the list is
