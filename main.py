@@ -194,6 +194,9 @@ def randomEnemy():
     enemyChosen = enemylist[roundNumber]
     return enemyChosen
 
+def willItBeABoss():
+    randomNumber = random.uniform(0,2)
+
 # I need to find a way to move the classes to another folder
 class Ranger:
     name = "Ranger"
@@ -267,10 +270,24 @@ class Necromancer:
     health = 10
     damage = 3
 
+# TODO implement a Boss Fight
+# make a random generator for the enemyChosen()
+# each level can possibly have a boss fight 
+class Cathulu:
+    name = "Cathulu"
+    description = "The baddest of Bad"
+    weapon = "The souls of the worlds"
+    health = 100
+    damage = 20
+
 # Used to put the enemies in an array for random number generator
 class Enemy:
     theGoblin = Goblin
     theTroll = Troll
     theNecromancer = Necromancer
     enemies = [theGoblin,theTroll,theNecromancer]
+
+class Boss:
+    theCathulu = Cathulu
+    bosses = [theCathulu]
 main()
