@@ -132,6 +132,7 @@ def secretArenaRoom(userCharacter):
     enemyChosen = randomEnemy()
     battle(userCharacter, enemyChosen)
 
+# Battle system this is Auto Battle, no choice purly based on damage and health
 def battle(userCharacter,enemyChosen):
     displayUserInfo(userCharacter)
     displayEnemyInfo(enemyChosen)
@@ -139,34 +140,48 @@ def battle(userCharacter,enemyChosen):
     userDamage = userCharacter.damage
     enemyHealth = enemyChosen.health
     enemyDamage = enemyChosen.damage
-    while (userHealth > 0 or enemyHealth > 0):
-        if enemyHealth > 0:
-            enemyHealth = userAttack(userDamage, enemyHealth)
-            print("Enemy Health: ", enemyHealth)
-        if userHealth > 0:
-            userHealth = enemyAttack(userHealth, enemyDamage)
-            print("User Health: ", userHealth)
+    while(userHealth >= 0) or (enemyHealth >= 0):
+        enemyHealth = userAttack(userDamage,enemyHealth)
+        print("Enemy Health: ",enemyHealth)
+        if enemyHealth <= 0:
+            break
+        userHealth = enemyAttack(userHealth, enemyDamage)
+        print("Youre Health: ", userHealth)
+        if userHealth <= 0:
+            break
+    if userHealth <= 0:
+        print("You died")
+    if enemyHealth <= 0:
+        print("The enemy has perished")
 
+# User Attack
 def userAttack(userDamage, enemyHealth):
-    damageDone = int(enemyHealth - userDamage)
-    return damageDone
-def enemyAttack(userHealth, enemyDamage):
-    damageDone = userHealth - enemyDamage
-    return damageDone
+    print("You attack")
+    remainingHealth = int(enemyHealth - userDamage)
+    return remainingHealth
 
+# Enemy Attack
+def enemyAttack(userHealth, enemyDamage):
+    remainingHealth = userHealth - enemyDamage
+    return remainingHealth
+
+# Displays All User Info
 def displayUserInfo(userCharacter):
     insertPrintBreaks()
     print(userCharacter.name)
-    print(userCharacter.weapon)
-    print(userCharacter.health)
+    print("Weapon: ", userCharacter.weapon)
+    print("Damage: ", userCharacter.damage)
+    print("Health: ", userCharacter.health)
     insertPrintBreaks()
 
+# Display Enemy Info
 def displayEnemyInfo(enemyChosen):
     insertPrintBreaks()
     print(enemyChosen.name)
     print(enemyChosen.description)
-    print(enemyChosen.weapon)
-    print(enemyChosen.health)
+    print("Weapon: ", enemyChosen.weapon)
+    print("Damage: ", enemyChosen.damage)
+    print("Health: ", enemyChosen.health)
     insertPrintBreaks()
 
 # Random Enemy Generator if more enemies added the random number generator needs to be adjusted
