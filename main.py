@@ -162,6 +162,7 @@ def userAttack(userDamage, enemyHealth):
 
 # Enemy Attack
 def enemyAttack(userHealth, enemyDamage):
+    print("The enemy attacks")
     remainingHealth = userHealth - enemyDamage
     return remainingHealth
 
@@ -186,16 +187,32 @@ def displayEnemyInfo(enemyChosen):
 
 # Random Enemy Generator if more enemies added the random number generator needs to be adjusted
 # Or find a way to show how long the list is
+# Creates a boss if willItBeABoss() evauates to true
 def randomEnemy():
-    enemyObject = Enemy
-    enemylist = enemyObject.enemies
-    number = random.uniform(0,2)
-    roundNumber = int(round(number))
-    enemyChosen = enemylist[roundNumber]
-    return enemyChosen
+    isBossEncounter = willItBeABoss()
+    if isBossEncounter == True:
+        bossObject = Boss
+        bossList = bossObject.bosses
+        number = random.uniform(0,1)
+        roundNumber = int(round(number))
+        bossChosen = bossList[roundNumber]
+        return bossChosen
+    else:
+        enemyObject = Enemy
+        enemylist = enemyObject.enemies
+        number = random.uniform(0,2)
+        roundNumber = int(round(number))
+        enemyChosen = enemylist[roundNumber]
+        return enemyChosen
 
+# Decides if their will be a boss, 1 in 10 odds
 def willItBeABoss():
-    randomNumber = random.uniform(0,2)
+    randomNumber = random.uniform(0,10)
+    roundedNumber = int(round(randomNumber))
+    if roundedNumber == 1:
+        return True
+    else:
+        return False
 
 # I need to find a way to move the classes to another folder
 class Ranger:
@@ -279,7 +296,12 @@ class Cathulu:
     weapon = "The souls of the worlds"
     health = 100
     damage = 20
-
+class GrimReaper:
+    name = "Grim Reaper"
+    description = "Reaper of Souls"
+    weapon = "Scythe"
+    health = 50
+    damage = 25
 # Used to put the enemies in an array for random number generator
 class Enemy:
     theGoblin = Goblin
@@ -289,5 +311,6 @@ class Enemy:
 
 class Boss:
     theCathulu = Cathulu
-    bosses = [theCathulu]
+    theGrimReaper = GrimReaper
+    bosses = [theCathulu,theGrimReaper]
 main()
