@@ -21,6 +21,11 @@ class door2:
     class room2:
         description = "You walk into the room, the entrance closes imediatly behind you. There is a lone wooden chest in the room. With nothing else, no were to go."
         options = ["Approach the Chest", "Try to open that entrance"]
+class ApproachChest:
+    description = "The chest doesnt look so special"
+    options = ["Open chest", "Walk Away"]
+        
+
 
 class door3:
     description = "A beaten up door with a 3 on it. Their is no light coming from it, but you feel wind blowing through the cracks."

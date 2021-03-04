@@ -106,6 +106,7 @@ def firstRoomChosen(doorChosen,userCharacter):
     elif doorChosen == Rooms.door2:
         print(Rooms.door2.room2.description)
         insertPrintBreaks()
+        loneChestRoom(userCharacter)
     elif doorChosen == Rooms.door3:
         print(Rooms.door3.room3.description)
         insertPrintBreaks()
@@ -126,6 +127,39 @@ def redOrbRoom():
     elif choice == 2:
         choice2 = Rooms.searchForWayOut
         print(choice2.description)
+# Works up until you choose to either Approach Chest or try open entrance
+def loneChestRoom(userCharacter):
+    chestRoom = Rooms.door2.room2
+    print("1: ", chestRoom.options[0])
+    print("2: ", chestRoom.options[1])
+    choice = input("1 or 2?")
+    insertPrintBreaks()
+    # Works until here
+    if choice == 1:
+        approach = Rooms.ApproachChest
+        print("1: ", approach.options[0])
+        print("2: ", approach.options[1])
+        choice1 = input("1 or 2?")
+        if choice1 == 1:
+            itemReceived = openChest()
+            print("You recieved: ", itemReceived)
+            userCharacter.items.append(itemReceived)
+        elif choice1 == 2:
+            return loneChestRoom(userCharacter)
+    elif choice == 2:
+        print("You cant find anyway out")
+        return loneChestRoom(userCharacter)
+
+
+# Used to randomly select an item in the chest
+# Unsure if it works 
+def openChest():
+    chestObject = User.Chest
+    randomNumber = random.uniform(0,1)
+    roundedNumber = int(round(randomNumber))
+    itemsList = chestObject.items
+    itemChosen = itemsList[roundedNumber]
+    return itemChosen
 
 # using to test combat
 # The random number generator is working i just need to parse the day
