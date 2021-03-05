@@ -132,28 +132,36 @@ def loneChestRoom(userCharacter):
     chestRoom = Rooms.door2.room2
     print("1: ", chestRoom.options[0])
     print("2: ", chestRoom.options[1])
-    choice = input("1 or 2?")
+    choice = int(input("1 or 2?"))
     insertPrintBreaks()
     # Works until here
     if choice == 1:
         approach = Rooms.ApproachChest
         print("1: ", approach.options[0])
         print("2: ", approach.options[1])
-        choice1 = input("1 or 2?")
+        choice1 = int(input("1 or 2?"))
+        insertPrintBreaks()
         if choice1 == 1:
-            itemReceived = openChest()
-            print("You recieved: ", itemReceived)
-            userCharacter.items.append(itemReceived)
+            itemReceived = openChest(userCharacter)
+            print("You recieved: ", itemReceived.name)
+            print(itemReceived.description)
+            powerUp(itemReceived,userCharacter)
+            print("Youre Health is: ", userCharacter.health)
+            print("Youre Damage is: ", userCharacter.damage)
         elif choice1 == 2:
             return loneChestRoom(userCharacter)
     elif choice == 2:
         print("You cant find anyway out")
         return loneChestRoom(userCharacter)
 
-
+def powerUp(itemReceived, userCharacter):
+    if itemReceived == User.HealthPotion:
+        userCharacter.health = userCharacter.health + 10
+    elif itemReceived == User.WeaponUpgrade:
+        userCharacter.damage = userCharacter.damage + 10
 # Used to randomly select an item in the chest
 # Unsure if it works 
-def openChest():
+def openChest(userCharacter):
     chestObject = User.Chest
     randomNumber = random.uniform(0,1)
     roundedNumber = int(round(randomNumber))
