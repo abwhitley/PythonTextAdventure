@@ -24,8 +24,17 @@ class door2:
 class ApproachChest:
     description = "The chest doesnt look so special"
     options = ["Open chest", "Walk Away"]
-        
 
+class RandomRoom:
+    description = "A unknown room"
+
+class ChestRoom:
+    name = "Chest Room"
+    description = "This is a chest Room"
+
+class BattleRoom:
+    name = "Battle Room"
+    description = "This is a battle room"
 
 class door3:
     description = "A beaten up door with a 3 on it. Their is no light coming from it, but you feel wind blowing through the cracks."

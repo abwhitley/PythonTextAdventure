@@ -148,11 +148,34 @@ def loneChestRoom(userCharacter):
             powerUp(itemReceived,userCharacter)
             print("Youre Health is: ", userCharacter.health)
             print("Youre Damage is: ", userCharacter.damage)
+            insertPrintBreaks()
+            print("After scavaging a the chest a door appears on the opposite side you entered from, you think at least, everything looks the same")
+            print("You walk to the door and open it")
+            randomRoom()
         elif choice1 == 2:
             return loneChestRoom(userCharacter)
     elif choice == 2:
         print("You cant find anyway out")
         return loneChestRoom(userCharacter)
+
+def randomRoom():
+    # make a funtion to decide if it will be a battle room or a chest room
+    nextRoom = Rooms.RandomRoom
+    print(nextRoom.description)
+    nextRoomChosen = battleOrChestRoom()
+    if nextRoomChosen == Rooms.BattleRoom:
+        print(nextRoomChosen.description)
+    elif nextRoomChosen == Rooms.ChestRoom:
+        print(nextRoomChosen.description)
+
+def battleOrChestRoom():
+    randomNumber = randomNumberGenerator(1)
+    if randomNumber == 0:
+        battleRoomObject = Rooms.BattleRoom
+        return battleRoomObject
+    elif randomNumber == 1:
+        chestRoomObject = Rooms.ChestRoom
+        return chestRoomObject
 
 def powerUp(itemReceived, userCharacter):
     if itemReceived == User.HealthPotion:
