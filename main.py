@@ -241,24 +241,24 @@ def displayEnemyInfoInBattle(enemyChosen, enemyHealth):
 
 
 
-# Random Enemy Generator if more enemies added the random number generator needs to be adjusted
-# Or find a way to show how long the list is
+# Random Enemy Generator and Boss Generator
 # Creates a boss if willItBeABoss() evauates to true
+
 def randomEnemy():
     isBossEncounter = willItBeABoss()
     if isBossEncounter == True:
         bossObject = Enemies.Boss
         bossList = bossObject.bosses
-        number = random.uniform(0,1)
-        roundNumber = int(round(number))
-        bossChosen = bossList[roundNumber]
+        bossCount = len(bossList)
+        randomNumber = randomNumberGenerator(bossCount)
+        bossChosen = bossList[randomNumber]
         return bossChosen
     else:
         enemyObject = Enemies.Enemy
         enemylist = enemyObject.enemies
-        number = random.uniform(0,2)
-        roundNumber = int(round(number))
-        enemyChosen = enemylist[roundNumber]
+        enemyCount = len(enemylist)
+        randomNumber = randomNumberGenerator(enemyCount)
+        enemyChosen = enemylist[randomNumber]
         return enemyChosen
 
 # Decides if their will be a boss, 1 in 10 odds
@@ -269,5 +269,11 @@ def willItBeABoss():
         return True
     else:
         return False
+
+# Used to return a random number to choose an item from an array
+def randomNumberGenerator(maxNumber):
+    randomNumber = random.randint(0, (maxNumber-1))
+    roundedRandomNumber = int(round(randomNumber))
+    return roundedRandomNumber
 
 main()
