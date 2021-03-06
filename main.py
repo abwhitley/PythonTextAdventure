@@ -158,6 +158,8 @@ def loneChestRoom(userCharacter):
         print("You cant find anyway out")
         return loneChestRoom(userCharacter)
 
+
+# Only choose a battle room, so far FIX
 def randomRoom():
     # make a funtion to decide if it will be a battle room or a chest room
     nextRoom = Rooms.RandomRoom
@@ -169,7 +171,10 @@ def randomRoom():
         print(nextRoomChosen.description)
 
 def battleOrChestRoom():
-    randomNumber = randomNumberGenerator(1)
+    room = Rooms.Rooms
+    roomList = room.roomList
+    roomCount = len(roomList)
+    randomNumber = randomNumberGeneratorForLists(roomCount)
     if randomNumber == 0:
         battleRoomObject = Rooms.BattleRoom
         return battleRoomObject
@@ -281,14 +286,14 @@ def randomEnemy():
         bossObject = Enemies.Boss
         bossList = bossObject.bosses
         bossCount = len(bossList)
-        randomNumber = randomNumberGenerator(bossCount)
+        randomNumber = randomNumberGeneratorForLists(bossCount)
         bossChosen = bossList[randomNumber]
         return bossChosen
     else:
         enemyObject = Enemies.Enemy
         enemylist = enemyObject.enemies
         enemyCount = len(enemylist)
-        randomNumber = randomNumberGenerator(enemyCount)
+        randomNumber = randomNumberGeneratorForLists(enemyCount)
         enemyChosen = enemylist[randomNumber]
         return enemyChosen
 
@@ -302,7 +307,7 @@ def willItBeABoss():
         return False
 
 # Used to return a random number to choose an item from an array
-def randomNumberGenerator(maxNumber):
+def randomNumberGeneratorForLists(maxNumber):
     randomNumber = random.randint(0, (maxNumber-1))
     roundedRandomNumber = int(round(randomNumber))
     return roundedRandomNumber
