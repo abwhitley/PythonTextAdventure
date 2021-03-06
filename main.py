@@ -232,6 +232,7 @@ def battle(userCharacter,enemyChosen):
         displayEnemyInfoInBattle(enemyChosen,enemyHealth)
         if enemyHealth <= 0:
             break
+        randomEnemyAttack(enemyChosen)
         userHealth = enemyAttack(userHealth, enemyDamage)
         displayUserInfoInBattle(userCharacter, userHealth)
         if userHealth <= 0:
@@ -241,6 +242,14 @@ def battle(userCharacter,enemyChosen):
     if enemyHealth <= 0:
         print("The enemy has perished")
         randomRoom(userCharacter)
+
+# Choses randomEnemyAtack
+# only displays the first attack of the enemy attack list
+# TODO Everything else
+def randomEnemyAttack(enemyChosen):
+    attacks = enemyChosen.attacks
+    print(attacks[0].name)
+
 
 # User Attack
 def userAttack(userDamage, enemyHealth):
