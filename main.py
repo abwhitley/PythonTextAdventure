@@ -1,5 +1,3 @@
-# This line needs to be worked on to import the classes
-# from Python Practice.Text-Based Adventure import class.py
 import random
 import Rooms
 import Enemies
@@ -33,6 +31,7 @@ def chooseYourCharacter():
         userCharacter = User.Wizard
     return userCharacter
 
+# Simple would you like to look around, leads to choosing the 3 doors
 def wouldYouLikeToLookAround():
     # originRooms is the class that contains all info for the doors and their descriptions
     entrance = Rooms.originRooms
@@ -97,7 +96,7 @@ def chooseADoor():
         doorObject = Rooms.TestArena
         return doorObject
 
-# Allow the door chosen to open the correct room and Secret Room
+# Allow the door chosen to open the correct room
 def firstRoomChosen(doorChosen,userCharacter):
     if doorChosen == Rooms.door1:
         print(Rooms.door1.room1.description)
@@ -112,9 +111,11 @@ def firstRoomChosen(doorChosen,userCharacter):
         insertPrintBreaks()
     elif doorChosen == Rooms.TestArena:
         insertPrintBreaks()
-        secretArenaRoom(userCharacter)
+        battleRoom(userCharacter)
 
 # 1st door Room
+# TODO lead to the procedure generated rooms
+# TODO make the orb change up the gameplay
 def redOrbRoom():
     redOrb = Rooms.door1.room1
     print("1:", redOrb.options[0])
@@ -127,7 +128,10 @@ def redOrbRoom():
     elif choice == 2:
         choice2 = Rooms.searchForWayOut
         print(choice2.description)
-# Works up until you choose to either Approach Chest or try open entrance
+
+# Works up until you choose to either Approach Chest or not
+# Reused in procedure generated rooms
+# TODO allow game play to be easier against enemies for not getting the chest
 def loneChestRoom(userCharacter):
     chestRoom = Rooms.door2.room2
     print("1: ", chestRoom.options[0])
@@ -151,7 +155,7 @@ def loneChestRoom(userCharacter):
             insertPrintBreaks()
             print("After scavaging a the chest a door appears on the opposite side you entered from, you think at least, everything looks the same")
             print("You walk to the door and open it")
-            randomRoom()
+            randomRoom(userCharacter)
         elif choice1 == 2:
             return loneChestRoom(userCharacter)
     elif choice == 2:
@@ -159,17 +163,22 @@ def loneChestRoom(userCharacter):
         return loneChestRoom(userCharacter)
 
 
-# Only choose a battle room, so far FIX
-def randomRoom():
+# Random chance of it being a chest room or a battle room.
+# TODO dont allow more than 2 chest rooms to appear
+def randomRoom(userCharacter):
     # make a funtion to decide if it will be a battle room or a chest room
     nextRoom = Rooms.RandomRoom
     print(nextRoom.description)
     nextRoomChosen = battleOrChestRoom()
     if nextRoomChosen == Rooms.BattleRoom:
         print(nextRoomChosen.description)
+        battleRoom(userCharacter)
     elif nextRoomChosen == Rooms.ChestRoom:
         print(nextRoomChosen.description)
+        loneChestRoom(userCharacter)
 
+# Used to deceided which of the two rooms it will be
+# TODO add check to make sure 2 chest rooms in a row cant happen
 def battleOrChestRoom():
     room = Rooms.Rooms
     roomList = room.roomList
@@ -182,13 +191,14 @@ def battleOrChestRoom():
         chestRoomObject = Rooms.ChestRoom
         return chestRoomObject
 
+# Used to allow the chest item to add to the characters stats
 def powerUp(itemReceived, userCharacter):
     if itemReceived == User.HealthPotion:
         userCharacter.health = userCharacter.health + 10
     elif itemReceived == User.WeaponUpgrade:
         userCharacter.damage = userCharacter.damage + 10
+
 # Used to randomly select an item in the chest
-# Unsure if it works 
 def openChest(userCharacter):
     chestObject = User.Chest
     randomNumber = random.uniform(0,1)
@@ -197,15 +207,19 @@ def openChest(userCharacter):
     itemChosen = itemsList[roundedNumber]
     return itemChosen
 
-# using to test combat
-# The random number generator is working i just need to parse the day
-def secretArenaRoom(userCharacter):
+# Used in procedure generated room
+def battleRoom(userCharacter):
     testArena1 = Rooms.TestArena
     print(testArena1.description)
     enemyChosen = randomEnemy()
     battle(userCharacter, enemyChosen)
 
 # Battle system this is Auto Battle, no choice purly based on damage and health
+# TODO add: Dodge Chance
+# TODO add: Missed Chance
+# TODO add: choise to choose an attack
+# TODO REMOVE AUTO BATTLE.. The choise to choose attack must be done first
+# TODO add: Choice to use items in battle, health potions
 def battle(userCharacter,enemyChosen):
     displayUserInfo(userCharacter)
     displayEnemyInfo(enemyChosen)
@@ -226,6 +240,7 @@ def battle(userCharacter,enemyChosen):
         print("You died")
     if enemyHealth <= 0:
         print("The enemy has perished")
+        randomRoom(userCharacter)
 
 # User Attack
 def userAttack(userDamage, enemyHealth):
@@ -248,6 +263,7 @@ def displayUserInfo(userCharacter):
     print("Health: ", userCharacter.health)
     insertPrintBreaks()
 
+# DIsplays user info mid battle
 def displayUserInfoInBattle(userCharacter, userHealth):
     insertPrintBreaks()
     print(userCharacter.name)
@@ -266,6 +282,7 @@ def displayEnemyInfo(enemyChosen):
     print("Health: ", enemyChosen.health)
     insertPrintBreaks()
 
+# Displays enemy info mid battle
 def displayEnemyInfoInBattle(enemyChosen, enemyHealth):
     insertPrintBreaks()
     print(enemyChosen.name)
@@ -278,8 +295,7 @@ def displayEnemyInfoInBattle(enemyChosen, enemyHealth):
 
 
 # Random Enemy Generator and Boss Generator
-# Creates a boss if willItBeABoss() evauates to true
-
+# Creates a boss if willItBeABoss() evaluates to true
 def randomEnemy():
     isBossEncounter = willItBeABoss()
     if isBossEncounter == True:

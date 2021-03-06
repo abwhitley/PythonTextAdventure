@@ -1,3 +1,4 @@
+# TODO: THIS WHOLE THING NEEDS TO BE BETTER ORGANIZED... ITS A MESS
 class TestArena:
     description = "Whats going on here?"
     

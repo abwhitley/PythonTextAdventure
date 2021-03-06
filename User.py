@@ -1,3 +1,5 @@
+# TODO add: Dodge Chance
+# TODO add: Diffrent Attacks
 class Ranger:
     name = "Ranger"
     description = "I use bows"
@@ -22,6 +24,8 @@ class Wizard:
     damage = 15
     items = []
 
+# TODO Rework health potion
+# TODO add: Health upgrade
 class HealthPotion:
     name = "Health Potion"
     description = "Increases Health"
@@ -30,6 +34,7 @@ class WeaponUpgrade:
     name = "Weapon Upgrade"
     description = "Upgrades Weapon Quality"
 
+# TODO add: Chest Trap, user takes damage from trap
 class Chest:
     name = "Chest"
     description = "A peculiar looking chest"
