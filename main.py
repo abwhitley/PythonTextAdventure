@@ -232,8 +232,10 @@ def battle(userCharacter,enemyChosen):
         displayEnemyInfoInBattle(enemyChosen,enemyHealth)
         if enemyHealth <= 0:
             break
-        randomEnemyAttack(enemyChosen)
-        userHealth = enemyAttack(userHealth, enemyDamage)
+        # choses a random enemy attack
+        attackChosen = randomEnemyAttack(enemyChosen)
+        # TODO attack chosen to enemyAttack
+        userHealth = enemyAttack(userHealth, enemyDamage, attackChosen)
         displayUserInfoInBattle(userCharacter, userHealth)
         if userHealth <= 0:
             break
@@ -244,11 +246,14 @@ def battle(userCharacter,enemyChosen):
         randomRoom(userCharacter)
 
 # Choses randomEnemyAtack
-# only displays the first attack of the enemy attack list
-# TODO Everything else
 def randomEnemyAttack(enemyChosen):
     attacks = enemyChosen.attacks
-    print(attacks[0].name)
+    numberOfAttacks = len(attacks)
+    randomNumber = randomNumberGeneratorForLists(numberOfAttacks)
+    attackChosen = attacks[randomNumber]
+    print(attackChosen.name)
+    print(attackChosen.description)
+    return attackChosen
 
 
 # User Attack
@@ -258,9 +263,11 @@ def userAttack(userDamage, enemyHealth):
     return remainingHealth
 
 # Enemy Attack
-def enemyAttack(userHealth, enemyDamage):
+def enemyAttack(userHealth, enemyDamage, attackChosen):
     print("The enemy attacks")
-    remainingHealth = userHealth - enemyDamage
+    print("The enemy used: ", attackChosen.name)
+    print("Damage: ", attackChosen.damage)
+    remainingHealth = userHealth - attackChosen.damage
     return remainingHealth
 
 # Displays All User Info
