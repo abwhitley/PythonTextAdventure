@@ -3,6 +3,7 @@ import Rooms
 import Enemies
 import User
 # Main executable that controls flow
+# TODO User stats restore to base stats after battle. Need to fix
 def main():
     userCharacter = chooseYourCharacter()
     print(userCharacter.description)
@@ -224,18 +225,15 @@ def battle(userCharacter,enemyChosen):
     displayUserInfo(userCharacter)
     displayEnemyInfo(enemyChosen)
     userHealth = userCharacter.health
-    userDamage = userCharacter.damage
     enemyHealth = enemyChosen.health
-    enemyDamage = enemyChosen.damage
     while(userHealth >= 0) or (enemyHealth >= 0):
-        enemyHealth = userAttack(userDamage,enemyHealth)
+        enemyHealth = userAttack(userCharacter,enemyHealth)
         displayEnemyInfoInBattle(enemyChosen,enemyHealth)
         if enemyHealth <= 0:
             break
         # choses a random enemy attack
         attackChosen = randomEnemyAttack(enemyChosen)
-        # TODO attack chosen to enemyAttack
-        userHealth = enemyAttack(userHealth, enemyDamage, attackChosen)
+        userHealth = enemyAttack(userHealth, attackChosen)
         displayUserInfoInBattle(userCharacter, userHealth)
         if userHealth <= 0:
             break
@@ -257,13 +255,23 @@ def randomEnemyAttack(enemyChosen):
 
 
 # User Attack
-def userAttack(userDamage, enemyHealth):
-    print("You attack")
-    remainingHealth = int(enemyHealth - userDamage)
+def userAttack(userCharacter, enemyHealth):
+    attacks = userCharacter.attacks
+    print("Attacks:")
+    print("1: ", attacks[0].name)
+    print("2: ", attacks[1].name)
+    choice = int(input("Choose attack: "))
+    if choice == 1:
+        attackChosen = attacks[0]
+    elif choice == 2:
+        attackChosen = attacks[1]
+    print("You used: ", attackChosen.name)
+    print(attackChosen.description)
+    remainingHealth = int(enemyHealth - attackChosen.damage)
     return remainingHealth
 
 # Enemy Attack
-def enemyAttack(userHealth, enemyDamage, attackChosen):
+def enemyAttack(userHealth, attackChosen):
     print("The enemy attacks")
     print("The enemy used: ", attackChosen.name)
     print("Damage: ", attackChosen.damage)
