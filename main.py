@@ -151,8 +151,7 @@ def loneChestRoom(userCharacter):
             print("You recieved: ", itemReceived.name)
             print(itemReceived.description)
             powerUp(itemReceived,userCharacter)
-            print("Youre Health is: ", userCharacter.health)
-            print("Youre Damage is: ", userCharacter.damage)
+            displayUserInfo(userCharacter)
             insertPrintBreaks()
             print("After scavaging a the chest a door appears on the opposite side you entered from, you think at least, everything looks the same")
             print("You walk to the door and open it")
@@ -197,7 +196,15 @@ def powerUp(itemReceived, userCharacter):
     if itemReceived == User.HealthPotion:
         userCharacter.health = userCharacter.health + 10
     elif itemReceived == User.WeaponUpgrade:
-        userCharacter.damage = userCharacter.damage + 10
+        attacksToUpgrade = userCharacter.attacks
+        print("Which attack would you like to upgrade?")
+        print("1: ", attacksToUpgrade[0].name)
+        print("2: ", attacksToUpgrade[1].name)
+        attackChosenToUpgrade = int(input("Choose: "))
+        if attackChosenToUpgrade == 1:
+            userCharacter.attacks[0].damage + 2
+        elif attackChosenToUpgrade == 2:
+            userCharacter.attacks[1].damage + 2
 
 # Used to randomly select an item in the chest
 def openChest(userCharacter):
@@ -214,6 +221,7 @@ def battleRoom(userCharacter):
     print(testArena1.description)
     enemyChosen = randomEnemy()
     battle(userCharacter, enemyChosen)
+
 
 # Battle system this is Auto Battle, no choice purly based on damage and health
 # TODO add: Dodge Chance
@@ -283,8 +291,9 @@ def displayUserInfo(userCharacter):
     insertPrintBreaks()
     print(userCharacter.name)
     print("Weapon: ", userCharacter.weapon)
-    print("Damage: ", userCharacter.damage)
     print("Health: ", userCharacter.health)
+    print("Attack: ", userCharacter.attacks[0].name," Damage: ", userCharacter.attacks[0].damage)
+    print("Attack: ", userCharacter.attacks[1].name," Damage: ", userCharacter.attacks[1].damage)
     insertPrintBreaks()
 
 # DIsplays user info mid battle

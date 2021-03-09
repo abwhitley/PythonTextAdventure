@@ -4,7 +4,6 @@ class Ranger:
     description = "I use bows"
     weapon = "Bow"
     health = 15
-    damage = 10
     items = []
     class LongShot:
         name = "Long Shot"
@@ -21,7 +20,6 @@ class Warrior :
     description = "I use swords and sheilds"
     weapon = "Sword"
     health = 25
-    damage = 5
     items = []
     class SheildSmash:
         name = "Sheild Smash"
@@ -38,7 +36,6 @@ class Wizard:
     description = "I use magic"
     weapon = "Staff"
     health = 10
-    damage = 15
     items = []
     class FireBall:
         name = "Fireball"
