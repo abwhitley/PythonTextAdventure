@@ -19,7 +19,7 @@ def insertPrintBreaks():
 def chooseYourCharacter():
     insertPrintBreaks()
     print("What class would you like?")
-    choice = input("Ranger, Warrior or Wizard?")
+    choice = input("Ranger, Warrior or Wizard? ")
     insertPrintBreaks()
     print("You chose ", choice)
     insertPrintBreaks()
