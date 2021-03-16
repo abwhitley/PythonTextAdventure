@@ -37,7 +37,7 @@ def wouldYouLikeToLookAround():
     # originRooms is the class that contains all info for the doors and their descriptions
     entrance = Rooms.originRooms
     print("You drop into a peculiar room, almost no light but a lone candle`")
-    print("Would you like to look around?")
+    print("Would you like to look around? ")
     insertPrintBreaks()
     choice = input("Yes or No")
     if choice == "Yes":
