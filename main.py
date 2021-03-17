@@ -2,8 +2,11 @@ import random
 import Rooms
 import Enemies
 import User
-# Main executable that controls flow
 # TODO User stats restore to base stats after battle. Need to fix
+# Updated the upgrade damage to an update the attacks damage with a choice
+# TODO Health upgrade changes the base stats but the Weapon upgrade doesnt update the stats.. weird
+
+# Main executable that controls flow
 def main():
     userCharacter = chooseYourCharacter()
     print(userCharacter.description)
@@ -19,17 +22,21 @@ def insertPrintBreaks():
 def chooseYourCharacter():
     insertPrintBreaks()
     print("What class would you like?")
-    choice = input("Ranger, Warrior or Wizard? ")
-    insertPrintBreaks()
-    print("You chose ", choice)
+    choice = input("Ranger, Warrior or Wizard? ").lower()
     insertPrintBreaks()
     # Connects users choise to the correct class
-    if choice == "Ranger":
+    if choice == "ranger":
+        print("You chose ", choice)
         userCharacter = User.Ranger
-    elif choice == "Warrior":
+    elif choice == "warrior":
+        print("You chose ", choice)
         userCharacter = User.Warrior
-    elif choice == "Wizard":
+    elif choice == "wizard":
+        print("You chose ", choice)
         userCharacter = User.Wizard
+    else:
+        print("The class inputed does not match the options. Try Again.")
+        chooseYourCharacter()
     return userCharacter
 
 # Simple would you like to look around, leads to choosing the 3 doors
