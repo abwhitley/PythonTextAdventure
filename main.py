@@ -9,7 +9,6 @@ import User
 # Main executable that controls flow
 def main():
     userCharacter = chooseYourCharacter()
-    print(userCharacter.description)
     insertPrintBreaks()
     doorChosen = chooseADoor()
     firstRoomChosen(doorChosen,userCharacter)
@@ -21,19 +20,23 @@ def insertPrintBreaks():
 # Function to choose Character
 def chooseYourCharacter():
     insertPrintBreaks()
-    print("What class would you like?")
-    choice = input("Ranger, Warrior or Wizard? ").lower()
+    # input is converted into lower case so the choice isnt case sensative
+    choice = input("What class would you like, the choices are Ranger, Warrior or Wizard? ").lower()
     insertPrintBreaks()
     # Connects users choise to the correct class
     if choice == "ranger":
-        print("You chose ", choice)
+        print("You chose",choice)
         userCharacter = User.Ranger
+        print(userCharacter.description)
     elif choice == "warrior":
-        print("You chose ", choice)
+        print("You chose",choice)
         userCharacter = User.Warrior
+        print(userCharacter.description)
     elif choice == "wizard":
-        print("You chose ", choice)
+        print("You chose",choice)
         userCharacter = User.Wizard
+        print(userCharacter.description)
+    # If input is not one of the above it will call the function again
     else:
         print("The class inputed does not match the options. Try Again.")
         chooseYourCharacter()
@@ -44,46 +47,45 @@ def wouldYouLikeToLookAround():
     # originRooms is the class that contains all info for the doors and their descriptions
     entrance = Rooms.originRooms
     print("You drop into a peculiar room, almost no light but a lone candle`")
-    print("Would you like to look around? ")
     insertPrintBreaks()
-    choice = input("Yes or No")
-    if choice == "Yes":
+    # choise is converted to lower case to remove case sensitivity 
+    choice = input("Would you like to look around? (Yes or No): ").lower()
+    if choice == "yes":
         print(entrance.description)
         insertPrintBreaks()
-    elif choice == "No":
+    elif choice == "no":
         print("Well what else are you going to do?")
         print("Lets look around the room")
         print(entrance.description)
         insertPrintBreaks()
+    else:
+        insertPrintBreaks()
+        print("That is not an option")
+        wouldYouLikeToLookAround()
 
 # Origin Room that leads to the door choise 
 def chooseADoor():
     wouldYouLikeToLookAround()
-    print("Which Door do you want to look at?")
-    doorChoice = int(input("1,2 or 3 or 4 for Test Arena?"))
+    doorChoice = int(input("Which Door do you want to look at? 1, 2, 3 or 4 for the Test Arena: "))
     insertPrintBreaks()
     if doorChoice == 1:
         doorObject = Rooms.door1
         print(doorObject.description)
-        print("Would you like to go through the door?")
+        doorChoice1 = input("Would you like to go through the door? (Yes or No): ").lower()
         insertPrintBreaks()
-        doorChoice1 = input("Yes or No")
-        insertPrintBreaks()
-        if doorChoice1 == "Yes":
+        if doorChoice1 == "yes":
             return doorObject
-        elif doorChoice1 == "No":
+        elif doorChoice1 == "no":
             print("Okay which door?")
             insertPrintBreaks()
             return chooseADoor()
     elif doorChoice == 2:
         doorObject = Rooms.door2
         print(doorObject.description)
-        print("Would you like to go through the door?")
-        insertPrintBreaks()
-        doorChoice1 = input("Yes or No")
-        if doorChoice1 == "Yes":
+        doorChoice1 = input("Would you like to go through the door? (Yes or No): ").lower()
+        if doorChoice1 == "yes":
             return doorObject
-        elif doorChoice1 == "No":
+        elif doorChoice1 == "no":
             print("Okay which door?")
             insertPrintBreaks()
             return chooseADoor()
@@ -91,18 +93,21 @@ def chooseADoor():
     elif doorChoice == 3:
         doorObject = Rooms.door3
         print(doorObject.description)
-        print("Would you like to go through the door?")
-        doorChoice1 = input("Yes or No")
+        doorChoice1 = input("Would you like to go through the door? (Yes or No): ").lower()
         insertPrintBreaks()
-        if doorChoice1 == "Yes":
+        if doorChoice1 == "yes":
             return doorObject
-        elif doorChoice1 == "No":
+        elif doorChoice1 == "no":
             print("Okay which door?")
             insertPrintBreaks()
             return chooseADoor()
     elif doorChoice == 4:
         doorObject = Rooms.TestArena
         return doorObject
+    else:
+        print("You did not input an option, try again")
+        insertPrintBreaks()
+        chooseADoor()
 
 # Allow the door chosen to open the correct room
 def firstRoomChosen(doorChosen,userCharacter):

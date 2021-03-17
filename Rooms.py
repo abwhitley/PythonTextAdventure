@@ -3,7 +3,7 @@ class TestArena:
     description = "Whats going on here?"
     
 class originRooms:
-    description = "I lone dark room with 3 door ways, each one marked in blood"
+    description = "A lone dark room with 3 door ways, each one marked in blood"
 
 class door1:
     description = "A wooden door, with a 1 on it. The door has a glowing red light comming underneath it"
