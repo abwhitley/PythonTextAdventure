@@ -5,7 +5,6 @@ class Goblin:
     description = "An ugly little creature that is not looking at you to kind"
     weapon = "Axe"
     health = 20
-    damage = 5
     class Slash:
         name = "Slash"
         description = "Slashed with the blunt blade of the axe"
@@ -21,10 +20,13 @@ class Troll:
     description = "Holy cow thats big"
     weapon = "Club"
     health = 50
-    damage = 15
     class Smash:
+        name = "Smash"
+        description = "The trolls club smacks into you"
         damage = 25
     class GrabAndThrow:
+        name = "Grab and Throw"
+        description = "The troll grabs and tosses you around"
         damage = 15
     attacks = [Smash, GrabAndThrow]
 
@@ -33,7 +35,6 @@ class Necromancer:
     description = "Has an erie auroa"
     weapon = "Possessed Staff"
     health = 30
-    damage = 10
     class DarkMagic:
         name = "Dark Magic"
         description = "It feels like a heart attack"
@@ -50,7 +51,6 @@ class Cathulu:
     description = "The baddest of Bad"
     weapon = "The souls of the worlds"
     health = 250
-    damage = 20
     class SoulEater:
         name = "Soul Eater"
         description = "You feel no light inside"
@@ -65,7 +65,6 @@ class GrimReaper:
     description = "Reaper of Souls"
     weapon = "Scythe"
     health = 100
-    damage = 25
     class ScytheSlice:
         name = "Scythe Slice"
         description = "The edge of its blade is unlike anything you have ever seen"
