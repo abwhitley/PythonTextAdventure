@@ -79,6 +79,9 @@ def chooseADoor():
             print("Okay which door?")
             insertPrintBreaks()
             return chooseADoor()
+        else:
+            print("You did not choose a valid option. Try Again.")
+            chooseADoor()
     elif doorChoice == 2:
         doorObject = Rooms.door2
         print(doorObject.description)
@@ -89,6 +92,9 @@ def chooseADoor():
             print("Okay which door?")
             insertPrintBreaks()
             return chooseADoor()
+        else:
+            print("You did not input a valid option. Try Again.")
+            chooseADoor()
         print(doorObject.description)
     elif doorChoice == 3:
         doorObject = Rooms.door3
@@ -101,6 +107,9 @@ def chooseADoor():
             print("Okay which door?")
             insertPrintBreaks()
             return chooseADoor()
+        else:
+            print("You didnt not input a vaild option. Try Again.")
+            chooseADoor()
     elif doorChoice == 4:
         doorObject = Rooms.TestArena
         return doorObject
@@ -141,6 +150,9 @@ def redOrbRoom():
     elif choice == 2:
         choice2 = Rooms.searchForWayOut
         print(choice2.description)
+    else:
+        print("You did not input a vaild option. Try again.")
+        redOrbRoom()
 
 # Works up until you choose to either Approach Chest or not
 # Reused in procedure generated rooms
@@ -170,9 +182,16 @@ def loneChestRoom(userCharacter):
             randomRoom(userCharacter)
         elif choice1 == 2:
             return loneChestRoom(userCharacter)
+        else:
+            print("You did not insert a valid option. Try Again.")
+            loneChestRoom(userCharacter)
+
     elif choice == 2:
         print("You cant find anyway out")
         return loneChestRoom(userCharacter)
+    else:
+        print("You did not insert a valid option. Try Again.")
+        loneChestRoom(userCharacter)
 
 
 # Random chance of it being a chest room or a battle room.
@@ -217,6 +236,10 @@ def powerUp(itemReceived, userCharacter):
             userCharacter.attacks[0].damage + 2
         elif attackChosenToUpgrade == 2:
             userCharacter.attacks[1].damage + 2
+        else:
+            print("You did not insert a valid option. Try Again.")
+            powerUp(itemReceived, userCharacter)
+
 
 # Used to randomly select an item in the chest
 def openChest(userCharacter):
@@ -285,6 +308,10 @@ def userAttack(userCharacter, enemyHealth):
         attackChosen = attacks[0]
     elif choice == 2:
         attackChosen = attacks[1]
+    else:
+        print("You did not insert a valid option. Try Again.")
+        userAttack(userCharacter, enemyHealth)
+
     print("You used: ", attackChosen.name)
     print(attackChosen.description)
     remainingHealth = int(enemyHealth - attackChosen.damage)
