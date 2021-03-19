@@ -5,6 +5,7 @@ import User
 # TODO User stats restore to base stats after battle. Need to fix
 # Updated the upgrade damage to an update the attacks damage with a choice
 # TODO Health upgrade changes the base stats but the Weapon upgrade doesnt update the stats.. weird
+# TODO found a bug when user input if their is a special character in the input it crashes
 
 # Main executable that controls flow
 def main():
@@ -223,6 +224,7 @@ def battleOrChestRoom():
         return chestRoomObject
 
 # Used to allow the chest item to add to the characters stats
+# TODO after allowing mutlitple attack the power up does not work for weapon damage
 def powerUp(itemReceived, userCharacter):
     if itemReceived == User.HealthPotion:
         userCharacter.health = userCharacter.health + 10
@@ -261,8 +263,6 @@ def battleRoom(userCharacter):
 # Battle system this is Auto Battle, no choice purly based on damage and health
 # TODO add: Dodge Chance
 # TODO add: Missed Chance
-# TODO add: choise to choose an attack
-# TODO REMOVE AUTO BATTLE.. The choise to choose attack must be done first
 # TODO add: Choice to use items in battle, health potions
 def battle(userCharacter,enemyChosen):
     displayUserInfo(userCharacter)
@@ -275,8 +275,8 @@ def battle(userCharacter,enemyChosen):
         if enemyHealth <= 0:
             break
         # choses a random enemy attack
-        attackChosen = randomEnemyAttack(enemyChosen)
-        userHealth = enemyAttack(userHealth, attackChosen)
+        enemyAttackChosen = randomEnemyAttack(enemyChosen)
+        userHealth = enemyAttack(userHealth, enemyAttackChosen)
         displayUserInfoInBattle(userCharacter, userHealth)
         if userHealth <= 0:
             break
@@ -340,7 +340,6 @@ def displayUserInfoInBattle(userCharacter, userHealth):
     insertPrintBreaks()
     print(userCharacter.name)
     print("Weapon: ", userCharacter.weapon)
-    print("Damage: ", userCharacter.damage)
     print("Health: ", userHealth)
     insertPrintBreaks()
 
@@ -350,7 +349,6 @@ def displayEnemyInfo(enemyChosen):
     print(enemyChosen.name)
     print(enemyChosen.description)
     print("Weapon: ", enemyChosen.weapon)
-    print("Damage: ", enemyChosen.damage)
     print("Health: ", enemyChosen.health)
     insertPrintBreaks()
 
@@ -360,7 +358,6 @@ def displayEnemyInfoInBattle(enemyChosen, enemyHealth):
     print(enemyChosen.name)
     print(enemyChosen.description)
     print("Weapon: ", enemyChosen.weapon)
-    print("Damage: ", enemyChosen.damage)
     print("Health: ", enemyHealth)
     insertPrintBreaks()
 
