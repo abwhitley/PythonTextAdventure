@@ -235,9 +235,13 @@ def powerUp(itemReceived, userCharacter):
         print("2: ", attacksToUpgrade[1].name)
         attackChosenToUpgrade = int(input("Choose: "))
         if attackChosenToUpgrade == 1:
-            userCharacter.attacks[0].damage + 2
+            print("Youre attack damage was:", userCharacter.attacks[0].damage)
+            userCharacter.attacks[0].damage = userCharacter.attacks[0].damage + 2
+            print("Youre attack damage is now: ", userCharacter.attacks[0].damage)
         elif attackChosenToUpgrade == 2:
-            userCharacter.attacks[1].damage + 2
+            print("Youre attack damage was:", userCharacter.attacks[1].damage)
+            userCharacter.attacks[1].damage = userCharacter.attacks[1].damage + 2
+            print("Youre attack damage is now: ", userCharacter.attacks[1].damage)
         else:
             print("You did not insert a valid option. Try Again.")
             powerUp(itemReceived, userCharacter)
