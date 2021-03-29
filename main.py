@@ -128,7 +128,7 @@ def firstRoomChosen(doorChosen,userCharacter):
     elif doorChosen == Rooms.door2:
         print(Rooms.door2.room2.description)
         insertPrintBreaks()
-        loneChestRoom(userCharacter)
+        chestRoom(userCharacter)
     elif doorChosen == Rooms.door3:
         print(Rooms.door3.room3.description)
         insertPrintBreaks()
@@ -158,13 +158,12 @@ def redOrbRoom():
 # Works up until you choose to either Approach Chest or not
 # Reused in procedure generated rooms
 # TODO allow game play to be easier against enemies for not getting the chest
-def loneChestRoom(userCharacter):
+def chestRoom(userCharacter):
     chestRoom = Rooms.door2.room2
     print("1: ", chestRoom.options[0])
     print("2: ", chestRoom.options[1])
     choice = int(input("1 or 2?"))
     insertPrintBreaks()
-    # Works until here
     if choice == 1:
         approach = Rooms.ApproachChest
         print("1: ", approach.options[0])
@@ -179,20 +178,30 @@ def loneChestRoom(userCharacter):
             displayUserInfo(userCharacter)
             insertPrintBreaks()
             print("After scavaging a the chest a door appears on the opposite side you entered from, you think at least, everything looks the same")
-            print("You walk to the door and open it")
-            randomRoom(userCharacter)
+            keepGoing = input("Would you like to go deeper in the dungeon? (Enter yes or no): ").lower()
+            if keepGoing == "yes":
+                # TODO!!!!!!! After dying the code drops right here... 
+                print("You walk to the door and open it")
+                randomRoom(userCharacter)
+            elif keepGoing == "no":
+                # TODO make a quit screen that shows the play throughs progress
+                print("What else are you going to do? There is no way back")
+                randomRoom(userCharacter)
+            else:
+                print("The only way is forward...")
+                randomRoom(userCharacter)
         elif choice1 == 2:
-            return loneChestRoom(userCharacter)
+            return chestRoom(userCharacter)
         else:
             print("You did not insert a valid option. Try Again.")
-            loneChestRoom(userCharacter)
+            chestRoom(userCharacter)
 
     elif choice == 2:
         print("You cant find anyway out")
-        return loneChestRoom(userCharacter)
+        return chestRoom(userCharacter)
     else:
         print("You did not insert a valid option. Try Again.")
-        loneChestRoom(userCharacter)
+        chestRoom(userCharacter)
 
 
 # Random chance of it being a chest room or a battle room.
@@ -207,7 +216,7 @@ def randomRoom(userCharacter):
         battleRoom(userCharacter)
     elif nextRoomChosen == Rooms.ChestRoom:
         print(nextRoomChosen.description)
-        loneChestRoom(userCharacter)
+        chestRoom(userCharacter)
 
 # Used to deceided which of the two rooms it will be
 # TODO add check to make sure 2 chest rooms in a row cant happen
@@ -286,9 +295,22 @@ def battle(userCharacter,enemyChosen):
             break
     if userHealth <= 0:
         print("You died")
-    if enemyHealth <= 0:
+    elif enemyHealth <= 0:
         print("The enemy has perished")
-        randomRoom(userCharacter)
+        insertPrintBreaks()
+        print("A door opens behind where the ", enemyChosen.name ,"stood.")
+        keepGoing = input("Would you like to continue? (Enter yes or no)").lower()
+        if keepGoing == "yes":
+            randomRoom(userCharacter)
+            print("You walk to the door and open it")
+        elif keepGoing == "no":
+            # TODO make a quit screen that shows the play throughs progress
+            print("What else are you going to do? There is no way back")
+            randomRoom(userCharacter)
+        else:
+            print("The only way is forward...")
+            randomRoom(userCharacter)
+
 
 # Choses randomEnemyAtack
 def randomEnemyAttack(enemyChosen):
