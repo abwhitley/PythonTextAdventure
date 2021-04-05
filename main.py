@@ -280,22 +280,20 @@ def battleRoom(userCharacter):
 def battle(userCharacter,enemyChosen):
     displayUserInfo(userCharacter)
     displayEnemyInfo(enemyChosen)
-    userHealth = userCharacter.health
-    enemyHealth = enemyChosen.health
-    while(userHealth >= 0) or (enemyHealth >= 0):
-        enemyHealth = userAttack(userCharacter,enemyHealth)
-        displayEnemyInfoInBattle(enemyChosen,enemyHealth)
-        if enemyHealth <= 0:
+    while(userCharacter.health >= 0) or (enemyChosen.health >= 0):
+        enemyChosen.health = userAttack(userCharacter,enemyChosen.health)
+        displayEnemyInfoInBattle(enemyChosen)
+        if enemyChosen.health <= 0:
             break
         # choses a random enemy attack
         enemyAttackChosen = randomEnemyAttack(enemyChosen)
-        userHealth = enemyAttack(userHealth, enemyAttackChosen)
-        displayUserInfoInBattle(userCharacter, userHealth)
-        if userHealth <= 0:
+        userCharacter.health = enemyAttack(userCharacter.health, enemyAttackChosen)
+        displayUserInfoInBattle(userCharacter)
+        if userCharacter.health <= 0:
             break
-    if userHealth <= 0:
+    if userCharacter.health <= 0:
         print("You died")
-    elif enemyHealth <= 0:
+    elif enemyChosen.health <= 0:
         print("The enemy has perished")
         insertPrintBreaks()
         print("A door opens behind where the ", enemyChosen.name ,"stood.")
@@ -362,11 +360,11 @@ def displayUserInfo(userCharacter):
     insertPrintBreaks()
 
 # DIsplays user info mid battle
-def displayUserInfoInBattle(userCharacter, userHealth):
+def displayUserInfoInBattle(userCharacter):
     insertPrintBreaks()
     print(userCharacter.name)
     print("Weapon: ", userCharacter.weapon)
-    print("Health: ", userHealth)
+    print("Health: ", userCharacter.health)
     insertPrintBreaks()
 
 # Display Enemy Info
@@ -379,12 +377,12 @@ def displayEnemyInfo(enemyChosen):
     insertPrintBreaks()
 
 # Displays enemy info mid battle
-def displayEnemyInfoInBattle(enemyChosen, enemyHealth):
+def displayEnemyInfoInBattle(enemyChosen):
     insertPrintBreaks()
     print(enemyChosen.name)
     print(enemyChosen.description)
     print("Weapon: ", enemyChosen.weapon)
-    print("Health: ", enemyHealth)
+    print("Health: ", enemyChosen.health)
     insertPrintBreaks()
 
 
