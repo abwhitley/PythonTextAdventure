@@ -2,9 +2,7 @@ import random
 import Rooms
 import Enemies
 import User
-# TODO User stats restore to base stats after battle. Need to fix
 # Updated the upgrade damage to an update the attacks damage with a choice
-# TODO Health upgrade changes the base stats but the Weapon upgrade doesnt update the stats.. weird
 # TODO found a bug when user input if their is a special character in the input it crashes
 
 # Main executable that controls flow
@@ -182,10 +180,12 @@ def chestRoom(userCharacter):
             if keepGoing == "yes":
                 # TODO!!!!!!! After dying the code drops right here... 
                 print("You walk to the door and open it")
+                userCharacter.summary.roomsTraveled = userCharacter.summary.roomsTraveled + 1
                 randomRoom(userCharacter)
             elif keepGoing == "no":
                 # TODO make a quit screen that shows the play throughs progress
                 print("What else are you going to do? There is no way back")
+                userCharacter.summary.roomsTraveled = userCharacter.summary.roomsTraveled + 1
                 randomRoom(userCharacter)
             else:
                 print("The only way is forward...")
@@ -233,7 +233,6 @@ def battleOrChestRoom():
         return chestRoomObject
 
 # Used to allow the chest item to add to the characters stats
-# TODO after allowing mutlitple attack the power up does not work for weapon damage
 def powerUp(itemReceived, userCharacter):
     if itemReceived == User.HealthPotion:
         userCharacter.health = userCharacter.health + 10
@@ -263,6 +262,7 @@ def openChest(userCharacter):
     roundedNumber = int(round(randomNumber))
     itemsList = chestObject.items
     itemChosen = itemsList[roundedNumber]
+    userCharacter.summary.chestsOpened = userCharacter.summary.chestsOpened + 1
     return itemChosen
 
 # Used in procedure generated room
@@ -287,16 +287,19 @@ def battle(userCharacter,enemyChosen):
             break
         # choses a random enemy attack
         enemyAttackChosen = randomEnemyAttack(enemyChosen)
-        userCharacter.health = enemyAttack(userCharacter.health, enemyAttackChosen)
+        userCharacter.health = enemyAttack(userCharacter.health, enemyAttackChosen, userCharacter)
         displayUserInfoInBattle(userCharacter)
         if userCharacter.health <= 0:
             break
     if userCharacter.health <= 0:
         print("You died")
+        gameSummary(userCharacter)
     elif enemyChosen.health <= 0:
         print("The enemy has perished")
         insertPrintBreaks()
         print("A door opens behind where the ", enemyChosen.name ,"stood.")
+        userCharacter.summary.battlesWon = userCharacter.summary.battlesWon + 1
+        userCharacter.summary.roomsTraveled = userCharacter.summary.roomsTraveled + 1
         keepGoing = input("Would you like to continue? (Enter yes or no)").lower()
         if keepGoing == "yes":
             randomRoom(userCharacter)
@@ -309,6 +312,18 @@ def battle(userCharacter,enemyChosen):
             print("The only way is forward...")
             randomRoom(userCharacter)
 
+# Shows the user a summary of the game after death
+def gameSummary(userCharacter):
+    insertPrintBreaks()
+    insertPrintBreaks()
+    print("END OF GAME SUMMARY")
+    insertPrintBreaks()
+    insertPrintBreaks()
+    print("Rooms Survived: ", userCharacter.summary.roomsTraveled)
+    print("Chests Openned: ", userCharacter.summary.chestsOpened)
+    print("Battles Won: ", userCharacter.summary.battlesWon)
+    print("Damage Dealt: ", userCharacter.summary.damageDealt)
+    print("Damage Received: ", userCharacter.summary.damageRecieved)
 
 # Choses randomEnemyAtack
 def randomEnemyAttack(enemyChosen):
@@ -339,14 +354,16 @@ def userAttack(userCharacter, enemyHealth):
     print("You used: ", attackChosen.name)
     print(attackChosen.description)
     remainingHealth = int(enemyHealth - attackChosen.damage)
+    userCharacter.summary.damageDealt = userCharacter.summary.damageDealt + attackChosen.damage
     return remainingHealth
 
 # Enemy Attack
-def enemyAttack(userHealth, attackChosen):
+def enemyAttack(userHealth, attackChosen, userCharacter):
     print("The enemy attacks")
     print("The enemy used: ", attackChosen.name)
     print("Damage: ", attackChosen.damage)
     remainingHealth = userHealth - attackChosen.damage
+    userCharacter.summary.damageRecieved = userCharacter.summary.damageRecieved + attackChosen.damage
     return remainingHealth
 
 # Displays All User Info

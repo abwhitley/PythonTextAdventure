@@ -1,10 +1,17 @@
 # TODO add: Dodge Chance
+class GameplaySummary:
+    roomsTraveled = 0
+    chestsOpened = 0
+    battlesWon = 0
+    damageDealt = 0
+    damageRecieved = 0
 class Ranger:
     name = "Ranger"
     description = "I use bows"
     weapon = "Bow"
     health = 15
     items = []
+    summary = GameplaySummary
     class LongShot:
         name = "Long Shot"
         description = "Bow attack with full charge"
@@ -21,6 +28,7 @@ class Warrior :
     weapon = "Sword"
     health = 25
     items = []
+    summary = GameplaySummary
     class SheildSmash:
         name = "Sheild Smash"
         description = "Back hand the enemy with the sheild"
@@ -37,6 +45,7 @@ class Wizard:
     weapon = "Staff"
     health = 10
     items = []
+    summary = GameplaySummary
     class FireBall:
         name = "Fireball"
         description = "Blast of skin melting flames"
@@ -49,6 +58,7 @@ class Wizard:
 
 # TODO Rework health potion
 # TODO add: Health upgrade
+# TODO Gamplay Summary
 class HealthPotion:
     name = "Health Potion"
     description = "Increases Health"
@@ -62,3 +72,4 @@ class Chest:
     name = "Chest"
     description = "A peculiar looking chest"
     items = [HealthPotion, WeaponUpgrade]
+
