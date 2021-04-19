@@ -37,10 +37,15 @@ class BattleRoom:
     name = "Battle Room"
     description = "This is a battle room"
 
+class CampSite:
+    name = "Camp Site"
+    description = "A room to rest"
+
 class Rooms:
     aChestRoom = ChestRoom
     aBattleRoom = BattleRoom
-    roomList = [aChestRoom,aBattleRoom]
+    aCampSite = CampSite
+    roomList = [aChestRoom,aBattleRoom, aCampSite]
 
 class door3:
     description = "A beaten up door with a 3 on it. Their is no light coming from it, but you feel wind blowing through the cracks."

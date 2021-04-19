@@ -175,7 +175,7 @@ def chestRoom(userCharacter):
             powerUp(itemReceived,userCharacter)
             displayUserInfo(userCharacter)
             insertPrintBreaks()
-            print("After scavaging a the chest a door appears on the opposite side you entered from, you think at least, everything looks the same")
+            print("After scavaging the chest a door appears on the opposite side you entered from, you think at least, everything looks the same")
             keepGoing = input("Would you like to go deeper in the dungeon? (Enter yes or no): ").lower()
             if keepGoing == "yes":
                 # TODO!!!!!!! After dying the code drops right here... 
@@ -210,17 +210,19 @@ def randomRoom(userCharacter):
     # make a funtion to decide if it will be a battle room or a chest room
     nextRoom = Rooms.RandomRoom
     print(nextRoom.description)
-    nextRoomChosen = battleOrChestRoom()
+    nextRoomChosen = randomRoomGenerator()
     if nextRoomChosen == Rooms.BattleRoom:
         print(nextRoomChosen.description)
         battleRoom(userCharacter)
     elif nextRoomChosen == Rooms.ChestRoom:
         print(nextRoomChosen.description)
         chestRoom(userCharacter)
+    elif nextRoomChosen == Rooms.CampSite:
+        campSite(userCharacter)
 
 # Used to deceided which of the two rooms it will be
 # TODO add check to make sure 2 chest rooms in a row cant happen
-def battleOrChestRoom():
+def randomRoomGenerator():
     room = Rooms.Rooms
     roomList = room.roomList
     roomCount = len(roomList)
@@ -231,6 +233,9 @@ def battleOrChestRoom():
     elif randomNumber == 1:
         chestRoomObject = Rooms.ChestRoom
         return chestRoomObject
+    elif randomNumber == 2:
+        campSiteRoomObject = Rooms.CampSite
+        return campSiteRoomObject
 
 # Used to allow the chest item to add to the characters stats
 def powerUp(itemReceived, userCharacter):
@@ -272,6 +277,28 @@ def battleRoom(userCharacter):
     enemyChosen = randomEnemy()
     battle(userCharacter, enemyChosen)
 
+def campSite(userCharacter):
+    restRoom = Rooms.CampSite
+    print(restRoom.name)
+    print(restRoom.description)
+    healAmount = userCharacter.health * .5
+    userCharacter.health = userCharacter.health + healAmount
+    print("After resting a door appears on the opposite side you entered from, you think at least, everything looks the same")
+    keepGoing = input("Would you like to go deeper in the dungeon? (Enter yes or no): ").lower()
+    if keepGoing == "yes":
+        # TODO!!!!!!! After dying the code drops right here... 
+        print("You walk to the door and open it")
+        userCharacter.summary.roomsTraveled = userCharacter.summary.roomsTraveled + 1
+        randomRoom(userCharacter)
+    elif keepGoing == "no":
+        # TODO make a quit screen that shows the play throughs progress
+        print("What else are you going to do? There is no way back")
+        userCharacter.summary.roomsTraveled = userCharacter.summary.roomsTraveled + 1
+        randomRoom(userCharacter)
+    else:
+        print("The only way is forward...")
+        randomRoom(userCharacter)
+
 
 # Battle system this is Auto Battle, no choice purly based on damage and health
 # TODO add: Dodge Chance
@@ -295,6 +322,8 @@ def battle(userCharacter,enemyChosen):
         print("You died")
         gameSummary(userCharacter)
     elif enemyChosen.health <= 0:
+        userCharacter.experiance = userCharacter.experiance + enemyChosen.experiance
+        updateLevel(userCharacter)
         print("The enemy has perished")
         insertPrintBreaks()
         print("A door opens behind where the ", enemyChosen.name ,"stood.")
@@ -319,6 +348,8 @@ def gameSummary(userCharacter):
     print("END OF GAME SUMMARY")
     insertPrintBreaks()
     insertPrintBreaks()
+    print("Character Level: ", userCharacter.level)
+    print("Eperiance Points: ", userCharacter.experiance)
     print("Rooms Survived: ", userCharacter.summary.roomsTraveled)
     print("Chests Openned: ", userCharacter.summary.chestsOpened)
     print("Battles Won: ", userCharacter.summary.battlesWon)
@@ -401,6 +432,14 @@ def displayEnemyInfoInBattle(enemyChosen):
     print("Weapon: ", enemyChosen.weapon)
     print("Health: ", enemyChosen.health)
     insertPrintBreaks()
+
+
+def updateLevel(userCharacter):
+    unroundedLevel = (userCharacter.experiance / 50)
+    userCharacter.level = round(unroundedLevel)
+    if userCharacter.level < 1:
+        userCharacter.level = 1
+
 
 
 

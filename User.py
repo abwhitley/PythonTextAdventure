@@ -5,12 +5,15 @@ class GameplaySummary:
     battlesWon = 0
     damageDealt = 0
     damageRecieved = 0
+
 class Ranger:
     name = "Ranger"
     description = "I use bows"
     weapon = "Bow"
     health = 15
     items = []
+    level = 1
+    experiance = 0
     summary = GameplaySummary
     class LongShot:
         name = "Long Shot"
@@ -28,6 +31,9 @@ class Warrior :
     weapon = "Sword"
     health = 25
     items = []
+    level = 1
+    experiance = 0
+
     summary = GameplaySummary
     class SheildSmash:
         name = "Sheild Smash"
@@ -45,6 +51,8 @@ class Wizard:
     weapon = "Staff"
     health = 10
     items = []
+    experiance = 0
+    level = 1
     summary = GameplaySummary
     class FireBall:
         name = "Fireball"
